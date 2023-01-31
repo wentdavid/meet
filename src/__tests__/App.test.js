@@ -28,28 +28,30 @@ describe("<App /> component", () => {
   })
 });
 
-describe("<App /> integration", () => {
-  test('App passes "events" state as a prop to EventList', () => {
-    const AppWrapper = mount(<App />);
-    const AppEventsState = AppWrapper.state("events");
-    expect(AppEventsState).not.toEqual(undefined);
-    expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
+describe('<App /> integration', () => {
+  let AppWrapper, AppEventsState, AppLocationsState;
+  beforeEach(() => {
+    AppWrapper = mount(<App />);
+    AppEventsState = AppWrapper.state('events');
+    AppLocationsState = AppWrapper.state('locations');
+  })
+
+  afterEach(() => {
     AppWrapper.unmount();
   })
-});
+
+
+  test('App passes "events" state as a prop to EventList', () => {
+    expect(AppEventsState).not.toEqual(undefined);
+    expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
+  })
 
   test('App passes "locations" state as a prop to CitySearch', () => {
-    const AppWrapper = mount(<App />);
-    const AppLocationsState = AppWrapper.state("locations");
     expect(AppLocationsState).not.toEqual(undefined);
-    expect(AppWrapper.find(CitySearch).props().locations).toEqual(
-      AppLocationsState
-    );
-    AppWrapper.unmount();
+    expect(AppWrapper.find(CitySearch).props().locations).toEqual(AppLocationsState);
   })
 
   test("get list of events matching the city selected by the user", async () => {
-    const AppWrapper = mount(<App />);
     const CitySearchWrapper = AppWrapper.find(CitySearch);
     const locations = extractLocations(mockData);
     CitySearchWrapper.setState({ suggestions: locations });
@@ -62,14 +64,12 @@ describe("<App /> integration", () => {
       (event) => event.location === selectedCity
     );
     expect(AppWrapper.state("events")).toEqual(eventsToShow);
-    AppWrapper.unmount();
   })
 
   test('get list of all events when user selects "See all cities"', async () => {
-    const AppWrapper = mount(<App />);
     const suggestionItems = AppWrapper.find(CitySearch).find(".suggestions li");
     await suggestionItems.at(suggestionItems.length - 1).simulate("click");
     const allEvents = await getEvents();
     expect(AppWrapper.state("events")).toEqual(allEvents);
-    AppWrapper.unmount();
-  })
+  });
+});
