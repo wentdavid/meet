@@ -9,22 +9,35 @@ class CitySearch extends Component {
 
   handleInputChanged = (event) => {
     const value = event.target.value;
+    this.setState({ showSuggestions: true });
     const suggestions = this.props.locations.filter((location) => {
         return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
     });
-    this.setState({ 
+
+    if (suggestions.length === 0) {
+      this.setState({ 
         query: value,
-        suggestions,
+        suggestions: [],
+        showSuggestions: false,
      });
-  };
+  } else {
+    return this.setState({
+      query: value,
+      suggestions: suggestions,
+    });
+  }
+};
 
   handleItemClicked = (suggestion) => {
     this.setState({
-        query: suggestion,
-        showSuggestions: false
+      query: suggestion,
+      suggestions: [],
+      showSuggestions: false,
     });
     this.props.updateEvents(suggestion);
-    }
+    };
+
+    handleInputFocus = () => {this.setState({ showSuggestions: true })}
 
   render() {
     return (
@@ -43,7 +56,7 @@ class CitySearch extends Component {
               onClick={() => this.handleItemClicked(suggestion)}
             >{suggestion}</li>
           ))}
-            <li onClick={() => this.handleItemClicked("all")}>
+            <li key="all" onClick={() => this.handleItemClicked("all")}>
             <b>See all cities</b>
           </li>
         </ul>

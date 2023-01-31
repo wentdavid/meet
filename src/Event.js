@@ -4,7 +4,7 @@ class Event extends Component {
 
     state = { collapsed: true };
     toggleDetails = () => {
-        this.setState((prevState) => ({ collapsed: !prevState.collapsed }))
+        this.setState(prevState => ({ collapsed: !prevState.collapsed }))
     }
 
   render() {
