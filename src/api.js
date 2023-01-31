@@ -23,7 +23,10 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = "YOUR_GET_EVENTS_API_ENDPOINT" + "/" + token;
+    const url =
+      "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" +
+      "/" +
+      token;
     const result = await axios.get(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
@@ -59,6 +62,23 @@ export const getAccessToken = async () => {
      return code && getToken(code);
    }
    return accessToken;
+};
+
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/" +
+      "/" +
+      encodeCode
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
+
+  access_token && localStorage.setItem("access_token", access_token);
+
+  return access_token;
 };
 
 const removeQuery = () => {
