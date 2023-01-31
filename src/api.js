@@ -35,8 +35,6 @@ export const getEvents = async () => {
   }
 };
 
-
-
 export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
   var locations = [...new Set(extractLocations)];
@@ -61,4 +59,18 @@ export const getAccessToken = async () => {
      return code && getToken(code);
    }
    return accessToken;
+};
+
+const removeQuery = () => {
+  if (window.history.pushState && window.location.pathname) {
+    var newurl =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname;
+    window.history.pushState({ path: newurl }, "", newurl);
+  } else {
+    newurl = window.location.protocol + "//" + window.location.host;
+    window.history.pushState("", "", newurl);
+  }
 };
