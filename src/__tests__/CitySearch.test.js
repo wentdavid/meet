@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import CitySearch from "../CitySearch";
+
 import { mockData } from "../mock-data";
 import { extractLocations } from "../api";
 
@@ -9,7 +10,7 @@ describe("<CitySearch /> component", () => {
   beforeAll(() => {
     locations = extractLocations(mockData);
     CitySearchWrapper = shallow(<CitySearch locations={locations} updateEvents={() => {}} />);
-  });
+  })
 
   test("renders a list of suggestions", () => {
     expect(CitySearchWrapper.find(".suggestions")).toHaveLength(1);
@@ -78,6 +79,4 @@ describe("<CitySearch /> component", () => {
     expect(CitySearchWrapper.state('showSuggestions')).toBe(false);
     expect(CitySearchWrapper.find('.suggestions').prop('style')).toEqual({ display: 'none' });
   });
-
-  
 });

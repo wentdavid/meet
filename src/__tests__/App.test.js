@@ -1,9 +1,11 @@
 import React from "react";
+import { shallow, mount } from "enzyme";
+
 import App from "../App";
 import EventList from "../EventList";
 import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
-import { shallow, mount } from "enzyme";
+
 import { mockData } from "../mock-data";
 import { extractLocations, getEvents } from "../api";
 
@@ -11,19 +13,19 @@ describe("<App /> component", () => {
   let AppWrapper;
   beforeAll(() => {
     AppWrapper = shallow(<App />);
-  });
+  })
 
-  test("render list of events", () => {
+  test("render EventList", () => {
     expect(AppWrapper.find(EventList)).toHaveLength(1);
-  });
+  })
 
   test("render CitySearch", () => {
     expect(AppWrapper.find(CitySearch)).toHaveLength(1);
-  });
+  })
 
   test("render NumberOfEvents", () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
-  });
+  })
 });
 
 describe("<App /> integration", () => {
@@ -33,7 +35,7 @@ describe("<App /> integration", () => {
     expect(AppEventsState).not.toEqual(undefined);
     expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
     AppWrapper.unmount();
-  });
+  })
 });
 
   test('App passes "locations" state as a prop to CitySearch', () => {
@@ -44,7 +46,7 @@ describe("<App /> integration", () => {
       AppLocationsState
     );
     AppWrapper.unmount();
-  });
+  })
 
   test("get list of events matching the city selected by the user", async () => {
     const AppWrapper = mount(<App />);
@@ -61,7 +63,7 @@ describe("<App /> integration", () => {
     );
     expect(AppWrapper.state("events")).toEqual(eventsToShow);
     AppWrapper.unmount();
-  });
+  })
 
   test('get list of all events when user selects "See all cities"', async () => {
     const AppWrapper = mount(<App />);
@@ -70,4 +72,4 @@ describe("<App /> integration", () => {
     const allEvents = await getEvents();
     expect(AppWrapper.state("events")).toEqual(allEvents);
     AppWrapper.unmount();
-  });
+  })

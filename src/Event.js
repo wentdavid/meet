@@ -4,8 +4,8 @@ class Event extends Component {
 
     state = { collapsed: true };
     toggleDetails = () => {
-        this.setState((prevState) => ({ collapsed: !prevState.collapsed }));
-    };
+        this.setState((prevState) => ({ collapsed: !prevState.collapsed }))
+    }
 
   render() {
     const { event } = this.props;
@@ -36,7 +36,7 @@ class Event extends Component {
         </button>
       </div>
     );
-    }
+  }
 }
 
 export default Event;
