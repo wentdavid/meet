@@ -1,4 +1,5 @@
 import { mockData } from "./mock-data";
+import axios from "axios";
 
 
 export const getEvents = async () => {
@@ -10,3 +11,5 @@ export const extractLocations = (events) => {
   var locations = [...new Set(extractLocations)];
   return locations;
 };
+
+export const getAccessToken = async () => {};
