@@ -19,7 +19,7 @@ class Event extends Component {
             : ""}
         </p>
 
-        <p className="event-location">{`@${event.location}`}</p>
+        <p className="event-location">{event.location}</p>
 
         {!collapsed && (
           <div className="event-details">
@@ -27,11 +27,7 @@ class Event extends Component {
             <a
               className="link"
               href={event.htmlLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              See more details
-            </a>
+            >See more details</a>
             <p className="description">{event.description}</p>
           </div>
         )}

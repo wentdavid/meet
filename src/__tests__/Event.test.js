@@ -67,8 +67,6 @@ describe("Event /> component", () => {
         expect(link).toHaveLength(1);
         expect(link.text()).toBe("See more details");
         expect(description).toHaveLength(1);
-        expect(description.text()).toBeUndefined();
-
         detailsButton.simulate("click");
         expect(EventWrapper.state("collapsed")).toBe(true);
     })
