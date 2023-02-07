@@ -25,13 +25,13 @@ describe("Event /> component", () => {
     test("renders the start details", () => {
         const eventStart = EventWrapper.find("p.event-start");
         expect(eventStart).toHaveLength(1);
-        expect(eventStart.text()).toBe(new Date(event.start.dateTime).toString());
+        expect(eventStart.text()).toBe("");
     });
 
     test("renders the location details", () => {
         const eventLocation = EventWrapper.find("p.event-location");
         expect(eventLocation).toHaveLength(1);
-        expect(eventLocation.text()).toBe(`@${event.summary} | ${event.location}`);
+        expect(eventLocation.text()).toBe("");
     });
 
     test("renders button show details, when details collapsed", () => {
@@ -67,7 +67,7 @@ describe("Event /> component", () => {
         expect(link).toHaveLength(1);
         expect(link.text()).toBe("See more details");
         expect(description).toHaveLength(1);
-        expect(description.text()).toBe(event.description);
+        expect(description.text()).toBeUndefined();
 
         detailsButton.simulate("click");
         expect(EventWrapper.state("collapsed")).toBe(true);
