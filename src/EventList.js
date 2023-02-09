@@ -4,6 +4,7 @@ import Event from './Event';
 class EventList extends Component {
   render() {
     const { events } = this.props;
+    console.log("This events", events);
     return (
       <ul className="EventList">
         {events.map((event) => (
