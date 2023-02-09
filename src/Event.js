@@ -8,6 +8,7 @@ class Event extends Component {
 
   render() {
     const { event } = this.props;
+    console.log(event)
     const { collapsed } = this.state;
 
     return (

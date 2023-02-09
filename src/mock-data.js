@@ -1,16 +1,5 @@
 const mockData = [
-  {
-    kind: "calendar#events",
-    etag: '"p320f7sehobhfm0g"',
-    summary: "fullstackwebdev@careerfoundry.com",
-    updated: "2022-12-05T12:52:50.544Z",
-    timeZone: "Europe/Berlin",
-    accessRole: "reader",
-    defaultReminders: [],
-    nextPageToken:
-      "EjYKKzZjbzBvamwwbDBqMHJiaDNnNTZ2bGMyczlpXzIwMjAwODEyVDAxMDAwMFoYgNikkdaU6wIiBwgFEIGymy4=",
-    items: [
-      {
+{
         kind: "calendar#event",
         etag: '"3181161784712000"',
         id: "4eahs9ghkhrvkld72hogu9ph3e_20200519T140000Z",
@@ -215,8 +204,6 @@ const mockData = [
         },
         eventType: "default",
       },
-    ],
-  },
 ];
 
 
