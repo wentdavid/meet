@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as atatus from "atatus-spa";
 
 import './index.css';
 
@@ -8,6 +7,7 @@ import App from './App';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import * as atatus from "atatus-spa";
 
 atatus.config("8dd018efd2e54ebfbe2c022a140fa8b6").install();
 
