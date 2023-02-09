@@ -23,15 +23,16 @@ describe("Event /> component", () => {
     });
 
     test("renders the start details", () => {
-        const eventStart = EventWrapper.find("p.event-start");
-        expect(eventStart).toHaveLength(1);
-        expect(eventStart.text()).toBe("");
+      const eventStart = EventWrapper.find("p.event-start");
+      expect(eventStart).toHaveLength(1);
+      const startDate = new Date(event.start.dateTime);
+      expect(eventStart.text()).toBe(startDate.toString());
     });
 
     test("renders the location details", () => {
         const eventLocation = EventWrapper.find("p.event-location");
         expect(eventLocation).toHaveLength(1);
-        expect(eventLocation.text()).toBe("");
+        expect(eventLocation.text()).toBe(event.location);
     });
 
     test("renders button show details, when details collapsed", () => {

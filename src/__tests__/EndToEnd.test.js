@@ -1,20 +1,39 @@
-import React from "react";
-import jest from "jest";
 import puppeteer from "puppeteer";
 
-describe("show/hide an event details", () => {});
 
-test("An event element is collapsed by default", async () => {
-  const browser = await puppeteer.launch();
+describe("show/hide an event details", () => {
+  let browser;
+  let page;
+  beforeAll(async () => {
+    jest.setTimeout(30000);
+    const browser = await puppeteer.launch({
+      headless: false,
+      slowMo: 250, // slow down by 250ms
+      ignoreDefaultArgs: ["--disable-extensions"], // ignores default setting that causes timeout errors
+    });
+    page = await browser.newPage();
+    await page.goto("http://localhost:3000/");
+    await page.waitForSelector(".event");
+  });
 
-  const page = await browser.newPage();
-  await page.goto("http://localhost:3000/");
+  afterAll(() => {
+    browser.close();
+  });
 
-  await page.waitForSelector(".event");
+  test("An event element is collapsed by default", async () => {
+    const eventDetails = await page.$(".event .event__Details");
+    expect(eventDetails).toBeNull();
+  });
 
-  const eventDetails = await page.$(".event .event__Details");
-  expect(eventDetails).toBeNull();
-  browser.close();
+  test("User can expand an event to see its details", async () => {
+    await page.click(".event .details-btn");
+    const eventDetails = await page.$(".event .event__Details");
+    expect(eventDetails).toBeDefined();
+  });
+
+  test("User can collapse an event to hide its details", async () => {
+    await page.click(".event .details-btn");
+    const eventDetails = await page.$(".event .event__Details");
+    expect(eventDetails).toBeNull();
+  });
 });
-
-//accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https://www.googleapis.com/auth/calendar.readonly&response_type=code&client_id=833471851549-mb59heqgs4g7bo3f5f3ogrd1pot28ct6.apps.googleusercontent.com&redirect_uri=https://wentdavid.github.io/meet/
