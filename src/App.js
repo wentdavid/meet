@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-
 import "./App.css";
 import "./nprogress.css";
 
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
-import Event from "./Event";
 import NumberOfEvents from "./NumberOfEvents";
 
 import { getEvents, extractLocations } from "./api";
@@ -14,6 +12,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
+    numberOfEvents: 32,
   };
 
   componentDidMount() {
@@ -42,6 +41,10 @@ class App extends Component {
     });
   };
 
+  updateNumberOfEvents = (event, value) => {
+    this.setState({ numberOfEvents: value });
+  };
+
   render() {
     console.log("APp Loaded", this.state);
     if (this.state.events.length === 0) return <div className="App" />;
@@ -52,8 +55,13 @@ class App extends Component {
           locations={this.state.locations}
           updateEvents={this.updateEvents}
         />
-        <NumberOfEvents />
-        <EventList events={this.state.events} />
+        <NumberOfEvents
+          updateNumberOfEvents={this.updateNumberOfEvents}
+          num={this.state.numberOfEvents}
+        />
+        <EventList
+          events={this.state.events.slice(0, this.state.numberOfEvents)}
+        />
       </div>
     );
   }
