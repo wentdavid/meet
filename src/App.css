@@ -1,9 +1,28 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import url("https://fonts.googleapis.com/css?family=Roboto:500");
 
 .App {
   text-align: center;
-  padding: 2% 5%;
-}
+  padding: 4% 10%;
+  
+  position: relative;
+  background: linear-gradient(90deg, #07f79b, #01442a);
+    animation: animate 200s linear infinite;
+  }
+  
+  @keyframes animate {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+  
+    50% {
+      filter: hue-rotate(360deg);
+    }
+  
+    100% {
+      filter: hue-rotate(0deg);
+    }
+  }
+
 
 .App * {
   box-sizing: border-box;
@@ -36,10 +55,24 @@ input[type="number"] {
   line-height: 20px;
   align-self: center;
   height: 38px;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  box-shadow: 0 0 10px #bcdcdb;
 }
 
 .city {
-  width: 250px;
+  width: 191px;
+  border-radius: 30px !important;
+}
+
+.num{
+  background-color: #ffffff;
+  border-radius: 30px !important;
+  margin-left: 10px;
+  max-width: 48px;
 }
 
 .CitySearch {
@@ -52,7 +85,7 @@ input[type="number"] {
 }
 
 .suggestions {
-  width: 250px;
+  width: 150px;
   position: absolute;
   z-index: 2;
   align-self: center;
@@ -60,6 +93,8 @@ input[type="number"] {
   top: 43px;
   font-size: 14px;
   box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+  border-radius: 8px;
+  background-color: #ffffff;
 }
 
 .suggestions>li {
@@ -67,6 +102,7 @@ input[type="number"] {
   padding: 8px 6px 8px 10px;
   background-color: #eee;
   cursor: default;
+  transition: all 0.3s ease-in-out;
 }
 
 .suggestions>li:last-child {
@@ -75,26 +111,52 @@ input[type="number"] {
 }
 
 .suggestions>li:hover {
-  background-color: #bcdcdb;
+  background-color: #fff;
+  transform: scale(1.05);
 }
 
 .event {
-  padding: 10px 10px 35px;
-  margin-bottom: 10px;
+  padding: 10px 40px 40px;
   text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  max-width: 500px;
+  border-radius: 30px;
+  box-shadow: 0 0px 8px -2px rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.2);
+  animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  position: relative;
+  flex-direction: column;
+  flex-basis: 300px;
+  margin: auto;
+  margin-bottom: 40px;
   position: relative;
 }
 
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .details-btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  outline: none;
+  color: white;
+  padding: 16px 20px;
+  border: none;
   cursor: pointer;
+  width: 100%;
+  border-radius: 30px !important;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.details-btn:hover {
+  background-color: #3e8e41 !important;
 }
 
 .name {
@@ -130,10 +192,6 @@ input[type="number"] {
   font-family: sans-serif;
 }
 
-.Alert {
-  position: fixed;
-  top: 20px;
-}
 
 .data-vis-wrapper {
   display: flex;
