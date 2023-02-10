@@ -1,37 +1,55 @@
 import React, { Component } from "react";
+import { ErrorAlert } from "./Alert";
+import "./App.css";
+
 
 class NumberOfEvents extends Component {
-  state = { num: 32 };
+  state = {
+    num: 32,
+    errorText: "",
+  };
 
   changeNum = (value) => {
-    this.setState({ num: value });
-    this.props.updateNumberOfEvents(value);
-    if (value < 1 || value > 32) {
-      this.setState({ errorText: "Please enter a number between 1 and 32" });
-    } else this.setState({ errorText: "" });
-        };
-
-        componentDidUpdate() {
-            this.setState({ num: this.props.num || 32 });
-        }
-
-        render() {
-            const {num} = this.state;
-            return (
-                <div className="NumberOfEvents">
-                    <label>Number of Events:
-                    <input
-                        className="num"
-                        type="number"
-                        value={num}
-                        onChange={(event) => {this.changeNum(event.target.value);
-                        }}
-                    >
-                    </input>
-                    </label>
-                </div>
-            );
-        }
+    let num = parseInt(value);
+    let errorText = "";
+    if (isNaN(num) || num < 1) {
+      num = 1;
+      errorText = "Number must be between 1 and 32, using default of 1.";
     }
+    if (num > 32) {
+      num = 32;
+      errorText = "Number must be between 1 and 32, using maximum of 32.";
+    }
+    this.setState({
+      errorText: errorText,
+      num: num,
+    });
+    this.props.updateNumberOfEvents(undefined, num);
+  };
 
-    export default NumberOfEvents;
+  componentDidMount() {
+    this.setState({ num: this.props.num || 32 });
+  }
+
+  render() {
+    const { num, errorText } = this.state;
+    return (
+      <div className="NumberOfEvents">
+        <ErrorAlert text={errorText} />
+        <label>
+          Number of Events
+          <input
+            className="num"
+            type="number"
+            value={num}
+            onChange={(event) => {
+              this.changeNum(event.target.value);
+            }}
+          ></input>
+        </label>
+      </div>
+    );
+  }
+}
+
+export default NumberOfEvents;
