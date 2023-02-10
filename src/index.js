@@ -14,6 +14,7 @@ atatus.config("8dd018efd2e54ebfbe2c022a140fa8b6").install();
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <h1 className='NoMoreEvents'>No more Events...</h1>
   </React.StrictMode>,
   document.getElementById("root")
 );
