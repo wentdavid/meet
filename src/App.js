@@ -2,28 +2,38 @@ import React, { Component } from "react";
 import "./App.css";
 import "./nprogress.css";
 
+import WelcomeScreen from "./WelcomeScreen";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 
-import { getEvents, extractLocations } from "./api";
+import { getEvents, extractLocations,checkToken, getAccessToken } from "./api";
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
+    showWelcomeScreen: undefined,
     numberOfEvents: 32,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log("component did mount");
     this.mounted = true;
+    const accessToken = localStorage.getItem("access_token");
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
     getEvents().then((events) => {
       if (this.mounted) {
         this.setState({ events, locations: extractLocations(events) });
       }
     });
   }
+  }
+  
 
   componentWillUnmount() {
     this.mounted = false;
@@ -47,6 +57,7 @@ class App extends Component {
 
   render() {
     console.log("APp Loaded", this.state);
+    if (this.state.showWelcomeScreen === undefined) return <div className="App" />;
     if (this.state.events.length === 0) return <div className="App" />;
 
     return (
@@ -62,6 +73,8 @@ class App extends Component {
         <EventList
           events={this.state.events.slice(0, this.state.numberOfEvents)}
         />
+        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} 
+        getAccessToken={() => {getAccessToken()}} />
       </div>
     );
   }
