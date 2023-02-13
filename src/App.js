@@ -24,14 +24,21 @@ class App extends Component {
     const isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
-    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
-    if ((code || isTokenValid) && this.mounted) {
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
-  }
+
+    // If code exists, or if token is valid, user is authorized
+    const authorized = code || isTokenValid;
+
+    // Check if localhost
+    const isLocal = window.location.href.indexOf("localhost") > -1 ? true : false;
+
+    this.setState({ showWelcomeScreen: !(authorized || isLocal) });
+    if ((authorized || isLocal) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
   }
   
 
