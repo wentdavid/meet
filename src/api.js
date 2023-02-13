@@ -40,10 +40,7 @@ export const getEvents = async () => {
     removeQuery();
 
     // Use the access token to call the get-events API
-    const url =
-      "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" +
-      "/" +
-      token;
+    const url = `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
     const result = await axios.get(url);
 
     // Store the events and locations in local storage
@@ -72,7 +69,7 @@ export const getAccessToken = async () => {
   const tokenCheck = accessToken && (await checkToken(accessToken));
 
   if (!accessToken || tokenCheck.error) {
-    localStorage.removeItem("access_token");
+    await localStorage.removeItem("access_token");
 
     // Redirect to the OAuth2 provider to get the authorization code
     const searchParams = new URLSearchParams(window.location.search);
@@ -98,9 +95,7 @@ export const getAccessToken = async () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token" +
-      "/" +
-      encodeCode
+    `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
   )
     .then((res) => {
       return res.json();
