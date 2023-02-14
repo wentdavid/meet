@@ -1,7 +1,6 @@
 // Import required libraries and modules
 import "regenerator-runtime/runtime";
 import { mockData } from "./mock-data";
-import axios from "axios";
 import NProgress from "nprogress";
 
 // Verify the access token using the Google OAuth2 API
@@ -40,20 +39,20 @@ export const getEvents = async () => {
     removeQuery();
 
     // Use the access token to call the get-events API
-    const url =
-      `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
-    const result = await axios.get(url);
+    const url = `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
+    const response = await fetch(url);
+    const result = await response.json();
 
     // Store the events and locations in local storage
-    if (result.data) {
-      console.log("Data: " + result.data.events);
-      const locations = extractLocations(result.data.events);
-      localStorage.setItem("lastEvents", JSON.stringify(result.data));
+    if (result) {
+      console.log("Data: " + result.events);
+      const locations = extractLocations(result.events);
+      localStorage.setItem("lastEvents", JSON.stringify(result));
       localStorage.setItem("locations", JSON.stringify(locations));
     }
 
     NProgress.done();
-    return result.data.events;
+    return result.events;
   }
 };
 
@@ -78,10 +77,12 @@ export const getAccessToken = async () => {
 
     if (!code) {
       // Get the URL to redirect the user to the OAuth2 provider
-      const results = await axios.get(
+      const results = await fetch(
         "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
-      );
-      const { authUrl } = results.data;
+      )
+        .then((res) => res.json())
+        .catch((error) => error);
+      const { authUrl } = results;
       return (window.location.href = authUrl);
     }
 
@@ -95,12 +96,10 @@ export const getAccessToken = async () => {
 // Get the access token using the authorization code and store it in local storage
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
-  const { access_token } = await fetch(
-    `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`)
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => error);
+  const response = await fetch(
+    `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
+  );
+  const { access_token } = await response.json();
 
   access_token && localStorage.setItem("access_token", access_token);
 
