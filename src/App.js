@@ -1,4 +1,13 @@
 import React, { Component } from "react";
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
 import "./App.css";
 import "./nprogress.css";
 
@@ -29,7 +38,8 @@ class App extends Component {
     const authorized = code || isTokenValid;
 
     // Check if localhost
-    const isLocal = window.location.href.indexOf("localhost") > -1 ? true : false;
+    const isLocal =
+      window.location.href.indexOf("localhost") > -1 ? true : false;
 
     this.setState({ showWelcomeScreen: !(authorized || isLocal) });
     if ((authorized || isLocal) && this.mounted) {
@@ -40,7 +50,6 @@ class App extends Component {
       });
     }
   }
-  
 
   componentWillUnmount() {
     this.mounted = false;
@@ -62,9 +71,22 @@ class App extends Component {
     this.setState({ numberOfEvents: value });
   };
 
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter(
+        (event) => event.location === location
+      ).length;
+      const city = location.split(", ").shift();
+      return { city, number };
+    });
+    return data;
+  };
+
   render() {
     console.log("APp Loaded", this.state);
-    if (this.state.showWelcomeScreen === undefined) return <div className="App" />;
+    if (this.state.showWelcomeScreen === undefined)
+      return <div className="App" />;
     if (this.state.events.length === 0) return <div className="App" />;
 
     return (
@@ -77,11 +99,38 @@ class App extends Component {
           updateNumberOfEvents={this.updateNumberOfEvents}
           num={this.state.numberOfEvents}
         />
+        <h4>Events in each city</h4>
+        <ResponsiveContainer height={400}>
+          <ScatterChart
+            margin={{
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 20,
+            }}
+          >
+            <CartesianGrid />
+            <XAxis type="category" dataKey="city" name="city" />
+            <YAxis
+              type="number"
+              dataKey="number"
+              name="number of events"
+              allowDecimals={false}
+            />
+            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+            <Scatter data={this.getData()} fill="#8884d8" />
+          </ScatterChart>
+        </ResponsiveContainer>
+
         <EventList
           events={this.state.events.slice(0, this.state.numberOfEvents)}
         />
-        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} 
-        getAccessToken={() => {getAccessToken()}} />
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
+        />
       </div>
     );
   }
