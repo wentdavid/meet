@@ -1,8 +1,8 @@
 // Import required libraries and modules
 import "regenerator-runtime/runtime";
 import { mockData } from "./mock-data";
+import axios from "axios";
 import NProgress from "nprogress";
-import { responsesAreSame } from "workbox-broadcast-update";
 
 // Verify the access token using the Google OAuth2 API
 export const checkToken = async (accessToken) => {
@@ -40,9 +40,9 @@ export const getEvents = async () => {
     removeQuery();
 
     // Use the access token to call the get-events API
-    const url = `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
-    const response = await fetch(url);
-    const result = await response.json();
+    const url =
+      `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
+    const result = await axios.get(url);
 
     // Store the events and locations in local storage
     if (result.data) {
@@ -78,10 +78,9 @@ export const getAccessToken = async () => {
 
     if (!code) {
       // Get the URL to redirect the user to the OAuth2 provider
-      const response = await fetch(
+      const results = await axios.get(
         "https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
       );
-      const results = await response.json();
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
     }
@@ -97,8 +96,7 @@ export const getAccessToken = async () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
-  )
+    `https://pqxjjmrmg7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`)
     .then((res) => {
       return res.json();
     })

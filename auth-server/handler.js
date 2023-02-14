@@ -149,7 +149,7 @@ module.exports.getCalendarEvents = (event) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
       },
-      body: JSON.stringify8({ events: results.data.items }),
+      body: JSON.stringify({ events: results.data.items }),
     };
   });
 };
