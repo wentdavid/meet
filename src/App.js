@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useState } from "react";
+import React, { Component } from "react";
 import {
   ScatterChart,
   Scatter,
@@ -6,11 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Sector
+  ResponsiveContainer
 } from "recharts";
 import "./App.css";
 import "./nprogress.css";
