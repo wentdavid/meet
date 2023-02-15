@@ -81,8 +81,8 @@ module.exports.getAuthURL = async () => {
         return {
           statusCode: 200,
           headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
           },
           body: JSON.stringify(token),
         };
@@ -93,8 +93,8 @@ module.exports.getAuthURL = async () => {
         return {
           statusCode: 500,
           headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
           },
           body: JSON.stringify(err),
         };
@@ -104,8 +104,8 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
       authUrl: authUrl,
