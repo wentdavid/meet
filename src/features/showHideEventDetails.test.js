@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import App from "../App";
 import { loadFeature, defineFeature } from "jest-cucumber";
 
-const feature = loadFeature("./src/features/showHideAnEventsDetails.feature");
+const feature = loadFeature("./src/features/showHideEventsDetails.feature");
 
 defineFeature(feature, (test) => {
   let AppWrapper;
