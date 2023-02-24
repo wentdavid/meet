@@ -6,7 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import "./App.css";
 import "./nprogress.css";
@@ -17,7 +17,7 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import EventGenre from "./EventGenre";
 
-import { getEvents, extractLocations,checkToken, getAccessToken } from "./api";
+import { getEvents, extractLocations, checkToken, getAccessToken } from "./api";
 
 class App extends Component {
   state = {
@@ -44,6 +44,10 @@ class App extends Component {
     this.mounted = true;
     const accessToken = localStorage.getItem("access_token");
     const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    console.log(isTokenValid);
+    console.log(await checkToken(accessToken));
+    console.log((await checkToken(accessToken)).error);
+
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
 
@@ -54,8 +58,8 @@ class App extends Component {
     const isLocal =
       window.location.href.indexOf("localhost") > -1 ? true : false;
 
-    this.setState({ showWelcomeScreen: !(authorized || isLocal) });
-    if ((authorized || isLocal) && this.mounted) {
+    this.setState({ showWelcomeScreen: !authorized });
+    if (authorized && this.mounted) {
       getEvents().then((events) => {
         if (this.mounted) {
           this.setState({ events, locations: extractLocations(events) });
@@ -85,10 +89,21 @@ class App extends Component {
   };
 
   render() {
-    console.log("APp Loaded", this.state);
+    console.log("APp Loaded!!", this.state);
     const { events } = this.state;
     if (this.state.showWelcomeScreen === undefined)
       return <div className="App" />;
+    if (this.state.showWelcomeScreen === true) {
+      alert(1);
+      return (
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
+        />
+      );
+    }
     if (this.state.events.length === 0) return <div className="App" />;
 
     return (
