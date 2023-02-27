@@ -90,7 +90,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("APp Loaded!!", this.state);
+    console.log("APP Loaded!!", this.state);
     const { events } = this.state;
     if (this.state.showWelcomeScreen === undefined)
       return <div className="App" />;
