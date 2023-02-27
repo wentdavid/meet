@@ -57,10 +57,8 @@ class App extends Component {
     // Check if localhost
     const isLocal =
       window.location.href.indexOf("localhost") > -1 ? true : false;
-
-    this.setState({ showWelcomeScreen: !authorized });
-    if (authorized && this.mounted) {
-      console.log("Get Events!")
+    this.setState({ showWelcomeScreen: !(authorized || isLocal) });
+    if ((authorized || isLocal) && this.mounted) {
       getEvents().then((events) => {
         if (this.mounted) {
           this.setState({ events, locations: extractLocations(events) });
