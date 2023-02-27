@@ -1,8 +1,9 @@
 import React from "react";
-import './WelcomeScreen.css';
+import "./WelcomeScreen.css";
 
 function WelcomeScreen(props) {
   return props.showWelcomeScreen ? (
+    <div className="WelcomeScreenBox">
     <div className="WelcomeScreen">
       <h1>Welcome to the Meet React App</h1>
       <h4>
@@ -24,11 +25,12 @@ function WelcomeScreen(props) {
             rel="nofollow noopener"
             class="btn-text"
           >
-            <b>Sign in with google</b>
+            <b class="sign-in">Sign in with google</b>
           </button>
         </div>
       </div>
-      <a
+      </div>
+      <a className="privacy-policy"
         href="https://wentdavid.github.io/meet/privacy.html"
         rel="nofollow noopener"
       >
@@ -37,4 +39,5 @@ function WelcomeScreen(props) {
     </div>
   ) : null;
 }
+
 export default WelcomeScreen;
