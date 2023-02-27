@@ -7,7 +7,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
 }
 
 .WelcomeScreen {
@@ -21,6 +23,9 @@
     align-items: center;
     justify-content: center;
     max-width: 500px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
 }
 
 .WelcomeScreen h1 {
@@ -46,11 +51,15 @@
     height: 42px;
     margin: 1rem;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    -webkit-border-radius: 30px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    -webkit-transition: all 0.2s ease;
 }
 
 .google-btn:hover {
     color: #4285f4 !important;
     box-shadow: 0 0px 5px 0 #4285f4 !important;
+    -webkit-box-shadow: 0 0px 5px 0 #4285f4 !important;
 }
 
 .google-icon-wrapper {
@@ -59,6 +68,11 @@
     position: absolute;
     width: 40px;
     height: 40px;
+    -webkit-border-radius: 50%;
+    -webkit-background-color: transparent;
+    -webkit-position: absolute;
+    -webkit-width: 40px;
+    -webkit-height: 40px;
 }
 
 .google-icon {
@@ -68,6 +82,12 @@
     width: 24px;
     height: 24px;
     position: relative;
+    -webkit-margin-top: 8px;
+    -webkit-margin-bottom: 8px;
+    -webkit-margin-left: 10px;
+    -webkit-width: 24px;
+    -webkit-height: 24px;
+    -webkit-position: relative;
 }
 
 .btn-text {
@@ -80,6 +100,15 @@
     cursor: pointer;
     float: right;
     margin: 11px 11px 0 0;
+    -webkit-font-family: "Roboto", sans-serif;
+    -webkit-font-size: 0.9rem;
+    -webkit-font-weight: 500;
+    -webkit-color: #494949;
+    -webkit-border: 0;
+    -webkit-background-color: transparent;
+    -webkit-cursor: pointer;
+    -webkit-float: right;
+    -webkit-margin: 11px 11px 0 0;
 }
 
 .btn-text:hover {
@@ -96,15 +125,19 @@
 
 @media only screen and (max-width: 600px) {
 
-    .WelcomeScreenBox{
+    .WelcomeScreenBox {
         padding: 5%;
+        -webkit-padding: 5%;
     }
 
     .WelcomeScreen h1 {
         font-size: 3rem;
+        -webkit-font-size: 3rem;
     }
 
     .WelcomeScreen h4 {
         font-size: 1.5rem;
+        -webkit-font-size: 1.5rem;
     }
+
 }
