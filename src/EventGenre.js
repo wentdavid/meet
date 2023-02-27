@@ -5,25 +5,28 @@ const EventGenre = ({ events }) => {
   const [data, setData] = useState([]);
   const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  useEffect(() => {
-    const getData = () => {
+  const getData = () => {
       const genres = ["React", "JavaScript", "Node", "jQuery", "AngularJS"];
-      const data = genres.map((genre) => {
-        const value = events.filter(event => event.summary.split(' ').includes(genre)).length
-        return { name: genre, value };
-        })
-        return data;
-    };
+    const data = genres.map((genre) => {
+      const value = events.filter((event) =>
+        event.summary.toUpperCase().includes(genre.toUpperCase())
+      ).length;
+      return { name: genre, value };
+    });
+    return data.filter((entry) => entry.value > 0);
+  };
+
+  useEffect(() => {
     setData(() => getData());
-    }, [events]);
+  }, [events]);
 
   return (
-    <ResponsiveContainer height="400">
+    <ResponsiveContainer height={400}>
       <PieChart width={400} height={400}>
         <Pie
           data={data}
-          cx="200"
-          cy="200"
+          cx={200}
+          cy={200}
           labelLine={false}
           outerRadius={80}
           fill="#8884d8"
@@ -31,11 +34,11 @@ const EventGenre = ({ events }) => {
           label={({ name, percent }) =>
             `${name} ${(percent * 100).toFixed(0)}%`
           }
-          >
-            {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
-            ))}
-          </Pie>
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index]} />
+          ))}
+        </Pie>
             <Legend verticalAlign="bottom" height={36} />
       </PieChart>
     </ResponsiveContainer>
