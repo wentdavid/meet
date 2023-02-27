@@ -60,6 +60,7 @@ class App extends Component {
 
     this.setState({ showWelcomeScreen: !authorized });
     if (authorized && this.mounted) {
+      console.log("Get Events!")
       getEvents().then((events) => {
         if (this.mounted) {
           this.setState({ events, locations: extractLocations(events) });
